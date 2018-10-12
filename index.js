@@ -8,7 +8,7 @@ const PREFIX = process.env.BOT_PREFIX;
 
 var http = require("http");
 setInterval(function () {
-    http.get("http://fpl-discord-bot.herokuapp.com/");
+    http.get("http://cinema-discord-bot.herokuapp.com/");
 }, 300000); // every 5 minutes (300000)
 
 client.on('ready', () => {
