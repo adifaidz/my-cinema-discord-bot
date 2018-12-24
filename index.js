@@ -23,7 +23,7 @@ client.registry
         help: false, prefix: false, ping: false, eval: false, commandState: false
     })
     .registerGroups([
-        ['cinema', 'Cinema Commandz']
+        ['cinema', 'Cinema']
     ])
     .registerCommandsIn(path.join(__dirname, 'commands'))
 
