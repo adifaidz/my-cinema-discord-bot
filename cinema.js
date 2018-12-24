@@ -53,7 +53,7 @@ async function findShowtimesByCinema(circuit, cinema){
         }
 
         return {
-            name: $(branch).text().split('-')[1].split(',')[0],
+            branch: $(branch).text().split('-')[1].split(',')[0],
             showtimes
         }
     })
@@ -77,6 +77,7 @@ async function findCinemasByCircuit(circuit) {
 }
 
 module.exports = {
+    circuits,
     findShowtimesByCinema,
     findCinemasByCircuit,
 }
