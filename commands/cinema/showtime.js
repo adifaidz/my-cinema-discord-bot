@@ -2,6 +2,7 @@ const { Command } = require('discord.js-commando')
 const Cinema = require('../../cinema')
 const { RichEmbed } = require('discord.js')
 const _ = require('lodash')
+const moment = require('moment')
 
 module.exports = class ShowtimeCommand extends Command {
     constructor(client) {
@@ -13,7 +14,7 @@ module.exports = class ShowtimeCommand extends Command {
             args: [
                 {
                     key: 'circuit',
-                    prompt: "Which of these circuit would you like to query for? [ tgv, mbo, gsc ]",
+                    prompt: 'Which of these circuit [ tgv, mbo, gsc ], would you like to query for?',
                     type: 'string',
                     oneOf: Object.values(Cinema.circuits)
                 },
@@ -21,15 +22,21 @@ module.exports = class ShowtimeCommand extends Command {
                     key: 'branch',
                     prompt: 'What branch would you like to query for?',
                     type: 'string'
+                },
+                {
+                    key: 'date',
+                    prompt: `What date would you like to query for? (default: ${moment().format('DD-MM-YY')})`,
+                    type: 'string',
                 }
             ],
-            examples: ['showtime [circuit] [branch]'],
+            examples: ['showtime [circuit] [branch] [date]'],
         })
     }
 
-    run(message, {circuit, branch}) {
+    run(message, {circuit, branch, date}) {
+        console.log(circuit, date)
         circuit = circuit.toLowerCase(), branch = branch.toLowerCase()
-
+        
         Cinema.findShowtimesByCinema(circuit, branch).then((response) => {
             if (_.isEmpty(response) || _.isEmpty(response.showtimes))
                 return message.reply('cannot find the showtimes. Maybe try something else?')
