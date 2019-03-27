@@ -72,12 +72,14 @@ async function findShowtimesByCinemaAndDate(circuit, cinema, date) {
     })
     const page = await browser.newPage()
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36')
-    await page.goto(`http://www.cinema.com.my/showtimes/cinemas${circuit}.aspx`)
+    await page.goto(`http://www.cinema.com.my/showtimes/cinemas${circuit}.aspx`, {
+        waitUntil: 'networkidle2'
+    })
     await page.addScriptTag({
         path: require.resolve('jquery')
     })
     await page.select('#ctl00_cpContent_ddlShowdate', `${formattedDate} 12:00:00 AM`)
-    await page.waitForNavigation()
+    await page.wait(3000)
 
     const response = await page.evaluate((cinema) => {
         let branch = $('h4>span').filter((i, el) => {
