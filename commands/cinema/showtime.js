@@ -2,7 +2,6 @@ const { Command } = require('discord.js-commando')
 const Cinema = require('../../cinema')
 const { RichEmbed } = require('discord.js')
 const _ = require('lodash')
-const moment = require('moment')
 
 module.exports = class ShowtimeCommand extends Command {
     constructor(client) {
@@ -25,7 +24,7 @@ module.exports = class ShowtimeCommand extends Command {
                 },
                 {
                     key: 'date',
-                    prompt: `What date would you like to query for? (default: ${moment().format('DD-MM-YY')})`,
+                    prompt: `What date (DDMMYY) would you like to query for? Send` + ' `-` for today',
                     type: 'string',
                 }
             ],
@@ -33,11 +32,17 @@ module.exports = class ShowtimeCommand extends Command {
         })
     }
 
-    run(message, {circuit, branch, date}) {
-        console.log(circuit, date)
+    async run(message, {circuit, branch, date}) {
         circuit = circuit.toLowerCase(), branch = branch.toLowerCase()
         
-        Cinema.findShowtimesByCinema(circuit, branch).then((response) => {
+        let api
+
+        if(!date || date === '-')
+            api = Cinema.findShowtimesByCinema(circuit, branch)
+        else
+            api = Cinema.findShowtimesByCinemaAndDate(circuit, branch, date)
+
+        api.then((response) => {
             if (_.isEmpty(response) || _.isEmpty(response.showtimes))
                 return message.reply('cannot find the showtimes. Maybe try something else?')
 
