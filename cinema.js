@@ -10,6 +10,17 @@ const circuits = {
     mbo: 'mbo'
 }
 
+const blockedResources = [
+    'image',
+    'media',
+    'font',
+    'texttrack',
+    'object',
+    'beacon',
+    'csp_report',
+    'imageset',
+];
+
 async function findShowtimesByCinema(circuit, cinema){
     validateCircuit(circuit);
     return await service.getShowtimes(circuit).then((response) => {
@@ -68,18 +79,27 @@ async function findShowtimesByCinemaAndDate(circuit, cinema, date) {
 
     const browser = await puppeteer.launch({
         headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-accelerated-2d-canvas', '--disable-dev-shm-usage', '--disable-gpu']
     })
     const page = await browser.newPage()
+    await page.setRequestInterception(true)
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36')
+    page.on('request', request => {
+        if(blockedResources.indexOf(request.resourceType()) !== -1) 
+            request.abort()
+        else
+            request.continue()
+    })
+
     await page.goto(`http://www.cinema.com.my/showtimes/cinemas${circuit}.aspx`, {
+        timeout: 25000,
         waitUntil: 'networkidle2'
     })
     await page.addScriptTag({
         path: require.resolve('jquery')
     })
     await page.select('#ctl00_cpContent_ddlShowdate', `${formattedDate} 12:00:00 AM`)
-    await page.wait(3000)
+    await page.waitForNavigation()
 
     const response = await page.evaluate((cinema) => {
         let branch = $('h4>span').filter((i, el) => {
