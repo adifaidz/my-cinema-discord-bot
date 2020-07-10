@@ -31,7 +31,7 @@
     "http": "0.0.0",
     "jquery": "^3.3.1",
     "jsonframe-cheerio": "^3.0.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.16",
     "moment": "^2.23.0",
     "moment-timezone": "^0.5.23",
     "moviedb": "^0.2.10",
