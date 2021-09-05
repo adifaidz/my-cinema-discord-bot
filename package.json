@@ -23,7 +23,7 @@
   "homepage": "https://github.com/adifaidz/my-cinema-discord-bot#readme",
   "dependencies": {
     "@bugsnag/js": "^5.1.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.3",
     "cheerio": "^1.0.0-rc.2",
     "discord.js": "^11.4.2",
     "discord.js-commando": "^0.10.0",
