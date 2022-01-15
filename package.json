@@ -34,7 +34,7 @@
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
     "moment-timezone": "^0.5.23",
-    "moviedb": "^0.2.10",
+    "moviedb": "^0.2.12",
     "puppeteer": "^1.13.0"
   }
 }
