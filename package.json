@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/adifaidz/my-cinema-discord-bot#readme",
   "dependencies": {
-    "@bugsnag/js": "^5.1.0",
+    "@bugsnag/js": "^6.0.0",
     "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.2",
     "discord.js": "^11.4.2",
@@ -33,7 +33,7 @@
     "jsonframe-cheerio": "^3.0.1",
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
-    "moment-timezone": "^0.5.23",
+    "moment-timezone": "^0.5.41",
     "moviedb": "^0.2.10",
     "puppeteer": "^1.13.0"
   }
